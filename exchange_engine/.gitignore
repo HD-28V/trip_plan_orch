@@ -1,0 +1,15 @@
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+# Secrets
+**/.env
+
+# Python virtual environments
+**/.venv/
+**/venv/
+
+# Python cache
+**/__pycache__/
+**/.pytest_cache/
+*.pyc
