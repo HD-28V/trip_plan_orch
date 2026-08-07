@@ -15,7 +15,9 @@ from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
+from typing import SupportsFloat, SupportsIndex, TypeAlias, cast
 
+import numpy as np
 import pandas as pd
 
 
@@ -48,6 +50,14 @@ from src.providers import (  # noqa: E402
 HISTORICAL_LOOKBACK_DAYS = 400
 MINIMUM_HISTORICAL_OBSERVATIONS = PERCENTILE_WINDOW
 UNAVAILABLE_TEXT = "unavailable"
+
+TimestampInput: TypeAlias = (
+    pd.Timestamp | datetime | date | str | float | np.datetime64
+)
+PandasScalar: TypeAlias = (
+    pd.Timestamp | datetime | date | str | bool | int | float | None
+)
+FloatInput: TypeAlias = str | bytes | bytearray | SupportsFloat | SupportsIndex
 
 
 class LiveCheckDataError(RuntimeError):
@@ -315,7 +325,7 @@ def _normalize_as_of_date(
         timestamp = pd.Timestamp(value)
     except (TypeError, ValueError) as error:
         raise ValueError("as_of_date must be a valid date") from error
-    if pd.isna(timestamp):
+    if _is_missing_scalar(timestamp):
         raise ValueError("as_of_date must be a valid date")
     if timestamp.tzinfo is not None:
         timestamp = timestamp.tz_convert("UTC").tz_localize(None)
@@ -324,10 +334,10 @@ def _normalize_as_of_date(
 
 def _format_date(value: object) -> str:
     try:
-        timestamp = pd.Timestamp(value)
+        timestamp = pd.Timestamp(cast(TimestampInput, value))
     except (TypeError, ValueError):
         return UNAVAILABLE_TEXT
-    if pd.isna(timestamp):
+    if _is_missing_scalar(timestamp):
         return UNAVAILABLE_TEXT
     if timestamp.tzinfo is not None:
         timestamp = timestamp.tz_convert("UTC").tz_localize(None)
@@ -335,15 +345,20 @@ def _format_date(value: object) -> str:
 
 
 def _format_number(value: object) -> str:
-    if pd.isna(value):
+    if _is_missing_scalar(value):
         return UNAVAILABLE_TEXT
     try:
-        numeric_value = float(value)
+        numeric_value = float(cast(FloatInput, value))
     except (TypeError, ValueError):
         return UNAVAILABLE_TEXT
     if not math.isfinite(numeric_value):
         return UNAVAILABLE_TEXT
     return f"{numeric_value:.6f}"
+
+
+def _is_missing_scalar(value: object) -> bool:
+    """Apply pandas' scalar missing-value check at an explicit type boundary."""
+    return bool(pd.isna(cast(PandasScalar, value)))
 
 
 def _report_error(message: str) -> int:
