@@ -1,0 +1,18 @@
+field,value
+report_purpose,historical candidate comparison; no winner selected
+advantage_pct,(forward_mean_rate - entry_rate) / entry_rate * 100
+favorable,advantage_pct > 0
+neutral,advantage_pct == 0
+unfavorable,advantage_pct < 0
+horizon_unit,subsequent trading observations; entry excluded
+calibration_period,date < 2024-01-01
+validation_period,date >= 2024-01-01
+occurrence_ratio_denominator,all evaluation dates in period
+coverage_denominator,signal occurrence_count
+direction_ratio_denominator,non-NaN evaluable_count
+cross_currency_weighting,equal weight per defined currency metric
+cross_currency_stddev,population standard deviation (ddof=0)
+currencies,"USD,JPY,EUR"
+horizons,"5,10,20,60"
+candidate_configuration_count,12
+total_runtime_seconds,345.448756
