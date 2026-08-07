@@ -1,0 +1,13 @@
+configuration_id,threshold_id,policy_id,sma60_good,sma60_strong,sma120_good,sma120_strong,percentile_good,percentile_strong,bollinger_near_lower_pct,minimum_available_conditions,watch_min_satisfied_conditions,good_min_satisfied_conditions,strong_min_satisfied_conditions,strong_min_strong_conditions
+baseline__conservative,baseline,conservative,-2.0,-4.0,-2.0,-4.0,25.0,10.0,1.0,4,2,4,4,4
+baseline__balanced,baseline,balanced,-2.0,-4.0,-2.0,-4.0,25.0,10.0,1.0,3,1,3,4,3
+baseline__sensitive,baseline,sensitive,-2.0,-4.0,-2.0,-4.0,25.0,10.0,1.0,2,1,2,3,2
+sma60_sensitive__balanced,sma60_sensitive,balanced,-1.0,-2.0,-2.0,-4.0,25.0,10.0,1.0,3,1,3,4,3
+sma60_strict__balanced,sma60_strict,balanced,-3.0,-5.0,-2.0,-4.0,25.0,10.0,1.0,3,1,3,4,3
+sma120_sensitive__balanced,sma120_sensitive,balanced,-2.0,-4.0,-1.0,-2.0,25.0,10.0,1.0,3,1,3,4,3
+sma120_strict__balanced,sma120_strict,balanced,-2.0,-4.0,-3.0,-5.0,25.0,10.0,1.0,3,1,3,4,3
+percentile_sensitive__balanced,percentile_sensitive,balanced,-2.0,-4.0,-2.0,-4.0,30.0,15.0,1.0,3,1,3,4,3
+percentile_strict__balanced,percentile_strict,balanced,-2.0,-4.0,-2.0,-4.0,20.0,5.0,1.0,3,1,3,4,3
+bollinger_strict__balanced,bollinger_strict,balanced,-2.0,-4.0,-2.0,-4.0,25.0,10.0,0.0,3,1,3,4,3
+bollinger_tight__balanced,bollinger_tight,balanced,-2.0,-4.0,-2.0,-4.0,25.0,10.0,0.5,3,1,3,4,3
+bollinger_sensitive__balanced,bollinger_sensitive,balanced,-2.0,-4.0,-2.0,-4.0,25.0,10.0,2.0,3,1,3,4,3

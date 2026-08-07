@@ -1,0 +1,57 @@
+field,value
+report_purpose,human review of existing calibration candidates
+analysis_only,True
+production_rule,False
+winner_selected,False
+ranking_or_score,none
+candidate_count,12
+periods,"CALIBRATION,VALIDATION"
+currencies,"USD,JPY,EUR"
+horizons,"5,10,20,60"
+signals,"WAIT,WATCH,GOOD,STRONG"
+occurrence_sample_definition,sum once per currency; never sum repeated horizons
+evaluable_label_definition,currency x signal x horizon non-NaN forward outcomes
+compact_pooled_favorable_definition,all evaluable GOOD+STRONG labels: sum favorable / sum evaluable
+compact_weighted_mean_definition,all evaluable GOOD+STRONG labels: evaluable-weighted cell means
+compact_gap_definition,VALIDATION - CALIBRATION on common supported currency x horizon cells
+median_definition,median of evaluable GOOD+STRONG cell medians; not a pooled raw median
+gap_direction,VALIDATION - CALIBRATION
+positive_cell_definition,"configured vote across favorable ratio, mean advantage, median advantage"
+period_shift_definition,at least 2 of 3 absolute favorable/mean/median gaps are material
+period_drift_definition,at least 2 of 3 favorable/mean/median gaps materially deteriorate
+currency_instability_definition,3 supported currencies plus material pooled-favorable range and mean/median sign conflict
+horizon_instability_definition,supported short and medium evidence plus material favorable drop or positive-to-negative mean/median change
+signal_separation_definition,failure fraction among configured minimum comparable adjacent-signal cells
+strong_too_rare_definition,minimum currency STRONG occurrence is below very_low_sample_count
+nan_policy,unavailable evidence remains NaN; never zero-filled
+common_currency_policy,common metrics require supported evidence in all three currencies
+promising_group_policy,3/3 supported and positive currencies; positive supported-cell ratio meets analysis heuristic; no validation drift or repeated STRONG<GOOD
+weak_group_policy,"not PROMISING and at least two core risk axes, or supported positive-cell ratio below 0.50 with adequate evidence"
+group_risk_policy,risk flags remain visible and do not by themselves remove a PROMISING review candidate
+shortlist_policy,"all PROMISING rows, unranked, never fill or truncate"
+shortlist_count,3
+shortlist_status,READY_FOR_HUMAN_REVIEW_3_UNRANKED
+period_length_warning,raw CALIBRATION/VALIDATION sample-count gaps reflect unequal period lengths; compare occurrence ratios too
+overlap_warning,forward horizons overlap; evaluable labels are not independent samples
+analysis_heuristic_low_sample_count,25
+analysis_heuristic_very_low_sample_count,10
+analysis_heuristic_low_coverage_ratio,0.8
+analysis_heuristic_severe_coverage_ratio,0.5
+analysis_heuristic_material_favorable_gap,0.1
+analysis_heuristic_material_mean_gap_pct,0.5
+analysis_heuristic_material_currency_favorable_range,0.15
+analysis_heuristic_material_horizon_favorable_drop,0.15
+analysis_heuristic_signal_comparison_min_evaluable_count,10
+analysis_heuristic_favorable_tie_band,0.02
+analysis_heuristic_advantage_tie_band_pct,0.1
+analysis_heuristic_minimum_comparable_separation_cells,4
+analysis_heuristic_comparison_failure_fraction,0.5
+analysis_heuristic_positive_metric_vote_count,2
+analysis_heuristic_positive_favorable_ratio_floor,0.5
+analysis_heuristic_positive_advantage_floor_pct,0.0
+analysis_heuristic_minimum_positive_currency_cell_ratio,0.5
+analysis_heuristic_minimum_positive_supported_cell_ratio,0.75
+analysis_heuristic_weak_positive_supported_cell_ratio,0.5
+analysis_heuristic_weak_core_risk_axis_count,2
+analysis_heuristic_shortlist_min_count,2
+analysis_heuristic_shortlist_max_count,5
